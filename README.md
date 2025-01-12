@@ -9,7 +9,9 @@
 [![Total Stars](https://img.shields.io/packagist/stars/cable8mm/enum-getter)](https://github.com/cable8mm/enum-getter/stargazers)
 [![License](https://img.shields.io/packagist/l/cable8mm/enum-getter)](https://github.com/cable8mm/enum-getter/blob/main/LICENSE.md)
 
-This package make `Enum`s simple for making keys, values and combine array including `translate` function.
+This package simplifies working with `Enum`s by providing convenient functionality for handling keys, values, and combined arrays, including a `translate` function.
+
+It is particularly useful for binding enums to `select` or `multiselect` tags in Laravel Nova, allowing you to manage and use translated values effortlessly.
 
 ## Installation
 
@@ -50,6 +52,12 @@ print Size::array()
 
 print Size::reverse()
 //=> ['large'=>'LARGE', 'middle'=>'MIDDLE', 'small'=>'SMALL']
+```
+
+When overriding the `name()` method to support non-English values,
+
+```php
+use Cable8mm\EnumGetter\EnumGetter;
 
 enum Size2: string
 {
