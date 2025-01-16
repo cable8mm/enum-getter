@@ -7,7 +7,15 @@ trait EnumGetter
     /**
      * Get name of the enum
      */
-    public function name(mixed $value = null)
+    public function name()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get the name from the value
+     */
+    public static function getName(mixed $value = null): mixed
     {
         if (! is_null($value)) {
             foreach (self::array() as $k => $v) {
@@ -17,7 +25,7 @@ trait EnumGetter
             }
         }
 
-        return $this->name;
+        return null;
     }
 
     /**

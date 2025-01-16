@@ -9,7 +9,7 @@ final class EnumGetterTest extends TestCase
     public function test_name_method_should_return_name_from_value(): void
     {
         $this->assertSame('EXAMPLE_1', Example::EXAMPLE_1->name());
-        $this->assertSame('EXAMPLE_2', Example::EXAMPLE_1->name(value: 'two'));
+        $this->assertSame('EXAMPLE_2', Example::getName(value: 'two'));
     }
 
     public function test_it_should_have_these_key(): void
