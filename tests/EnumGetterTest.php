@@ -6,9 +6,11 @@ use PHPUnit\Framework\TestCase;
 
 final class EnumGetterTest extends TestCase
 {
-    public function test_it_should_be_true(): void
+    public function test_it_should_have_these_key(): void
     {
-        $this->assertTrue(true);
+        $this->assertSame('EXAMPLE_1', Example::EXAMPLE_1->name);
+        $this->assertSame('EXAMPLE_2', Example::EXAMPLE_2->name);
+        $this->assertSame('EXAMPLE_3', Example::EXAMPLE_3->name);
     }
 
     public function test_it_should_have_these_keys(): void
@@ -25,11 +27,11 @@ final class EnumGetterTest extends TestCase
         $this->assertContains('three', Example::values());
     }
 
-    public function test_it_should_have_these_values_of_child_classes(): void
+    public function test_it_should_have_these_keys_of_child_classes(): void
     {
-        $this->assertSame('ChildClass one', TranslatedExample::EXAMPLE_1->name());
-        $this->assertSame('ChildClass two', TranslatedExample::EXAMPLE_2->name());
-        $this->assertSame('ChildClass three', TranslatedExample::EXAMPLE_3->name());
+        $this->assertSame('EXAMPLE_1', TranslatedExample::EXAMPLE_1->name());
+        $this->assertSame('EXAMPLE_2', TranslatedExample::EXAMPLE_2->name());
+        $this->assertSame('EXAMPLE_3', TranslatedExample::EXAMPLE_3->name());
     }
 
     public function test_it_should_have_translated_values(): void
