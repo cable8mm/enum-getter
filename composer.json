@@ -1,7 +1,6 @@
 {
     "name": "cable8mm/enum-getter",
     "description": "This package make Enums simple for making keys, values and combine array including translate function.",
-    "version": "1.0.0",
     "keywords": [
         "cable8mm",
         "enum-getter",
