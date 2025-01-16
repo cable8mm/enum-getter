@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.2.0 - 2025-01-16
+
+### What's Changed
+
+* Get the key from the value by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/3
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v1.1.0...v1.2.0
+
 ## v1.1.0 - 2025-01-16
 
 ### What's Changed
