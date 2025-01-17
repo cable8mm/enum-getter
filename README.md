@@ -35,11 +35,17 @@ enum Size: string
     case SMALL = 'small';
 }
 
-print Size::LARGE
+print Size::LARGE->name
+//=> 'LARGE'
+
+print Size::LARGE->value
+//=> 'large'
+
+print Size::LARGE->value()
 //=> 'large'
 
 print Size::LARGE->name()
-//=> 'large'
+//=> 'LARGE'
 
 print Size::names()
 //=> ['LARGE', 'MIDDLE', 'SMALL']
@@ -50,11 +56,11 @@ print Size::values()
 print Size::array()
 //=> ['LARGE'=>'large', 'MIDDLE'=>'middle', 'SMALL'=>'small']
 
-print Size::reverse()
-//=> ['large'=>'LARGE', 'middle'=>'MIDDLE', 'small'=>'SMALL']
+print Size::getName('large')
+//=> 'LARGE'
 ```
 
-When overriding the `name()` method to support non-English values,
+When overriding the `value()` method to support non-English values,
 
 ```php
 use Cable8mm\EnumGetter\EnumGetter;
@@ -67,7 +73,7 @@ enum Size2: string
     case MIDDLE = 'middle';
     case SMALL = 'small';
 
-    public function name(): string
+    public function value(): string
     {
         return match ($this) {
             self::LARGE => 'grand', // __('large') can use a translation module
@@ -77,11 +83,17 @@ enum Size2: string
     }
 }
 
-print Size2::LARGE
+print Size2::LARGE->name
+//=> 'LARGE'
+
+print Size::LARGE->value
 //=> 'large'
 
-print Size2::LARGE->name()
+print Size::LARGE->value()
 //=> 'grand'
+
+print Size2::LARGE->name()
+//=> 'LARGE'
 
 print Size2::names()
 //=> ['LARGE', 'MIDDLE', 'SMALL']
@@ -92,8 +104,25 @@ print Size2::values()
 print Size2::array()
 //=> ['LARGE'=>'grand', 'MIDDLE'=>'milieu', 'SMALL'=>'petit(e)']
 
-print Size2::reverse()
-//=> ['grand'=>'LARGE', 'milieu'=>'MIDDLE', 'petit(e)'=>'SMALL']
+print Size::getName('grand')
+//=> 'LARGE'
+```
+
+Let me share you a example for Laravel Nova:
+
+```php
+// In field of Nova resource
+Select::make(__('Size'), 'size')
+    ->options(Size2::array())
+    ->displayUsingLabels(),
+
+// In Nova factory file
+public function definition(): array
+{
+    return [
+        'size' => fake()->randomElement(Size2::names()),
+    ];
+}
 ```
 
 ### Testing
