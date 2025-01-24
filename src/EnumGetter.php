@@ -5,7 +5,7 @@ namespace Cable8mm\EnumGetter;
 trait EnumGetter
 {
     /**
-     * Get name of the enum
+     * Get name of the enum.
      */
     public function name()
     {
@@ -13,7 +13,7 @@ trait EnumGetter
     }
 
     /**
-     * Get the name from the value
+     * Get the name from the value.
      */
     public static function getName(mixed $value = null): mixed
     {
@@ -29,7 +29,7 @@ trait EnumGetter
     }
 
     /**
-     * Get value of the enum
+     * Get value of the enum.
      */
     public function value()
     {
@@ -57,11 +57,16 @@ trait EnumGetter
     }
 
     /**
-     * Get array of keys and values
+     * Get array of keys and values.
+     *
+     * @example EnumGetter::array() ['KEY1' => 'VALUE1', 'KEY2' => 'VALUE2', ...]
+     * @example EnumGetter::array(value: 'YOU') ['KEY1' => 'YOU', 'KEY2' => 'YOU', ...]
      */
-    public static function array(): array
+    public static function array(?string $value = null): array
     {
-        return array_combine(self::names(), self::values());
+        $values = ! is_null($value) ? array_fill(0, count(self::names()), $value) : self::values();
+
+        return array_combine(self::names(), $values);
     }
 
     public static function reverse(): array

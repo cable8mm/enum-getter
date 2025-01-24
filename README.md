@@ -23,12 +23,70 @@ composer require cable8mm/enum-getter
 
 ## Usage
 
+It can be used for Laravel Nova like this:
+
+```php
+use Laravel\Nova\Fields\Badge;
+
+/**
+ * @see https://nova.laravel.com/docs/v5/resources/fields#badge-field
+ */
+Badge::make(__('Status'), 'status')
+    ->map(Status::array(value: 'info'))
+    ->labels(Status::array()),
+```
+
+```php
+use Laravel\Nova\Fields\Select;
+
+/**
+ * @see https://nova.laravel.com/docs/v5/resources/fields#select-field
+ */
+Select::make(__('Status'), 'status')
+    ->rules('required')
+    ->required()
+    ->options(Status::array())
+    ->displayUsingLabels()
+    ->filterable()
+    ->sortable(),
+```
+
+```php
+use Laravel\Nova\Fields\Status;
+
+/**
+ * @see https://nova.laravel.com/docs/v5/resources/fields#status-field
+ */
+Status::make(__('Status'), 'status')
+    ->loadingWhen(Status::loadingWhen())
+    ->failedWhen(Status::failedWhen())
+    ->filterable(function ($request, $query, $value, $attribute) {
+        $query->where($attribute, $value);
+    })->displayUsing(function ($value) {
+        return Status::{$value}->value() ?? '-';
+    }),
+```
+
+In order to make a Nova factory::
+
+```php
+// In Nova factory file
+public function definition(): array
+{
+    return [
+        'size' => fake()->randomElement(Status::names()),
+    ];
+}
+```
+
+## How to make use in detail
+
 ```php
 use Cable8mm\EnumGetter\EnumGetter;
 
 enum Size: string
 {
-    use EnumGetter;
++    use EnumGetter;
 
     case LARGE = 'large';
     case MIDDLE = 'middle';
@@ -67,20 +125,20 @@ use Cable8mm\EnumGetter\EnumGetter;
 
 enum Size2: string
 {
-    use EnumGetter;
++    use EnumGetter;
 
     case LARGE = 'large';
     case MIDDLE = 'middle';
     case SMALL = 'small';
 
-    public function value(): string
-    {
-        return match ($this) {
-            self::LARGE => 'grand', // __('large') can use a translation module
-            self::MIDDLE => 'milieu', // __('milieu') can use a translation module
-            self::SMALL => 'petit(e)', // __('small') can use a translation module
-        };
-    }
++    public function value(): string
++    {
++        return match ($this) {
++            self::LARGE => 'grand', // __('large') can use a translation module
++            self::MIDDLE => 'milieu', // __('milieu') can use a translation module
++            self::SMALL => 'petit(e)', // __('small') can use a translation module
++        };
++    }
 }
 
 print Size2::LARGE->name
@@ -106,23 +164,6 @@ print Size2::array()
 
 print Size::getName('grand')
 //=> 'LARGE'
-```
-
-Let me share you a example for Laravel Nova:
-
-```php
-// In field of Nova resource
-Select::make(__('Size'), 'size')
-    ->options(Size2::array())
-    ->displayUsingLabels(),
-
-// In Nova factory file
-public function definition(): array
-{
-    return [
-        'size' => fake()->randomElement(Size2::names()),
-    ];
-}
 ```
 
 ### Testing

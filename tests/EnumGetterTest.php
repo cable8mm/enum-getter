@@ -57,4 +57,9 @@ final class EnumGetterTest extends TestCase
         $this->assertContains('ChildClass two', TranslatedExample::array());
         $this->assertContains('ChildClass three', TranslatedExample::array());
     }
+
+    public function test_it_should_have_array_with_values(): void
+    {
+        $this->assertEquals(['EXAMPLE_1' => 'you', 'EXAMPLE_2' => 'you', 'EXAMPLE_3' => 'you'], Example::array(value: 'you'));
+    }
 }
