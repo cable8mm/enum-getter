@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.4.0 - 2025-01-24
+
+### What's Changed
+
+* Fix README as changing a apis by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/6
+* Add a function to fill a value what you want by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/7
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v1.3.0...v1.4.0
+
 ## v1.3.0 - 2025-01-16
 
 ### What's Changed
