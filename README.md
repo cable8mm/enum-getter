@@ -81,7 +81,7 @@ public function definition(): array
 
 ## How to make use in detail
 
-```php
+```diff
 use Cable8mm\EnumGetter\EnumGetter;
 
 enum Size: string
@@ -120,7 +120,7 @@ print Size::getName('large')
 
 When overriding the `value()` method to support non-English values,
 
-```php
+```diff
 use Cable8mm\EnumGetter\EnumGetter;
 
 enum Size2: string
