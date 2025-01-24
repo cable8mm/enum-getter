@@ -25,18 +25,18 @@ composer require cable8mm/enum-getter
 
 It can be used for Laravel Nova like this:
 
-```php
+```diff
 use Laravel\Nova\Fields\Badge;
 
 /**
  * @see https://nova.laravel.com/docs/v5/resources/fields#badge-field
  */
 Badge::make(__('Status'), 'status')
-    ->map(Status::array(value: 'info'))
-    ->labels(Status::array()),
++    ->map(Status::array(value: 'info'))
++    ->labels(Status::array()),
 ```
 
-```php
+```diff
 use Laravel\Nova\Fields\Select;
 
 /**
@@ -45,36 +45,36 @@ use Laravel\Nova\Fields\Select;
 Select::make(__('Status'), 'status')
     ->rules('required')
     ->required()
-    ->options(Status::array())
++    ->options(Status::array())
     ->displayUsingLabels()
     ->filterable()
     ->sortable(),
 ```
 
-```php
+```diff
 use Laravel\Nova\Fields\Status;
 
 /**
  * @see https://nova.laravel.com/docs/v5/resources/fields#status-field
  */
 Status::make(__('Status'), 'status')
-    ->loadingWhen(Status::loadingWhen())
-    ->failedWhen(Status::failedWhen())
++    ->loadingWhen(Status::loadingWhen())
++    ->failedWhen(Status::failedWhen())
     ->filterable(function ($request, $query, $value, $attribute) {
         $query->where($attribute, $value);
-    })->displayUsing(function ($value) {
-        return Status::{$value}->value() ?? '-';
-    }),
++    })->displayUsing(function ($value) {
++        return Status::{$value}->value() ?? '-';
++    }),
 ```
 
 In order to make a Nova factory::
 
-```php
+```diff
 // In Nova factory file
 public function definition(): array
 {
     return [
-        'size' => fake()->randomElement(Status::names()),
++        'size' => fake()->randomElement(Status::names()),
     ];
 }
 ```
