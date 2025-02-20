@@ -100,7 +100,7 @@ print Size::LARGE->name()   //=> 'LARGE'
 print Size::names()         //=> ['LARGE', 'MIDDLE', 'SMALL']
 print Size::values()        //=> ['large', 'middle', 'small']
 print Size::array()         //=> ['LARGE'=>'large', 'MIDDLE'=>'middle', 'SMALL'=>'small']
-print Size::reverse()         //=> ['large'=>'LARGE', 'middle'=>'MIDDLE', 'small'=>'SMALL']
+print Size::reverse()       //=> ['large'=>'LARGE', 'middle'=>'MIDDLE', 'small'=>'SMALL']
 print Size::getName('large')//=> 'LARGE'
 print Size::of('large')     //=> Size::LARGE
 ```
@@ -121,9 +121,9 @@ enum Size2: string
     public function value(): string
     {
         return match ($this) {
-            self::LARGE => 'grand', // __('large') can use a translation module
-            self::MIDDLE => 'milieu', // __('milieu') can use a translation module
-            self::SMALL => 'petit(e)', // __('small') can use a translation module
+            self::LARGE => 'grand',     // __('large') can use a translation module
+            self::MIDDLE => 'milieu',   // __('milieu') can use a translation module
+            self::SMALL => 'petit(e)',  // __('small') can use a translation module
         };
     }
 }
@@ -135,7 +135,7 @@ print Size2::LARGE->name()  //=> 'LARGE'
 print Size2::names()        //=> ['LARGE', 'MIDDLE', 'SMALL']
 print Size2::values()       //=> ['grand', 'milieu', 'petit(e)']
 print Size2::array()        //=> ['LARGE'=>'grand', 'MIDDLE'=>'milieu', 'SMALL'=>'petit(e)']
-print Size2::reverse()        //=> ['grand'=>'LARGE', 'milieu'=>'MIDDLE', 'petit(e)'=>'SMALL']
+print Size2::reverse()      //=> ['grand'=>'LARGE', 'milieu'=>'MIDDLE', 'petit(e)'=>'SMALL']
 print Size::getName('grand')//=> 'LARGE'
 print Size::of('large')     //=> Size::LARGE
 ```
