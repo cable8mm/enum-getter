@@ -62,4 +62,11 @@ final class EnumGetterTest extends TestCase
     {
         $this->assertEquals(['EXAMPLE_1' => 'you', 'EXAMPLE_2' => 'you', 'EXAMPLE_3' => 'you'], Example::array(value: 'you'));
     }
+
+    public function test_of_method(): Void
+    {
+        $this->assertSame(Example::EXAMPLE_1, Example::of('EXAMPLE_1'));
+        $this->assertSame(Example::EXAMPLE_2, Example::of('EXAMPLE_2'));
+        $this->assertSame(Example::EXAMPLE_3, Example::of('EXAMPLE_3'));
+    }
 }
