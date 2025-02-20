@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.5.0 - 2025-02-20
+
+### What's Changed
+
+* Fix `README.md` markdown syntax as `diff` by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/8
+* Get a instance from `enum` name by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/9
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v1.4.0...v1.5.0
+
 ## v1.4.0 - 2025-01-24
 
 ### What's Changed
