@@ -25,18 +25,18 @@ composer require cable8mm/enum-getter
 
 It can be used for Laravel Nova like this:
 
-```diff
+```php
 use Laravel\Nova\Fields\Badge;
 
 /**
  * @see https://nova.laravel.com/docs/v5/resources/fields#badge-field
  */
 Badge::make(__('Status'), 'status')
-+    ->map(Status::array(value: 'info'))
-+    ->labels(Status::array()),
+    ->map(Status::array(value: 'info'))
+    ->labels(Status::array()),
 ```
 
-```diff
+```php
 use Laravel\Nova\Fields\Select;
 
 /**
@@ -45,125 +45,99 @@ use Laravel\Nova\Fields\Select;
 Select::make(__('Status'), 'status')
     ->rules('required')
     ->required()
-+    ->options(Status::array())
+    ->options(Status::array())
     ->displayUsingLabels()
     ->filterable()
     ->sortable(),
 ```
 
-```diff
+```php
 use Laravel\Nova\Fields\Status;
 
 /**
  * @see https://nova.laravel.com/docs/v5/resources/fields#status-field
  */
 Status::make(__('Status'), 'status')
-+    ->loadingWhen(Status::loadingWhen())
-+    ->failedWhen(Status::failedWhen())
+    ->loadingWhen(Status::loadingWhen())
+    ->failedWhen(Status::failedWhen())
     ->filterable(function ($request, $query, $value, $attribute) {
         $query->where($attribute, $value);
-+    })->displayUsing(function ($value) {
-+        return Status::{$value}->value() ?? '-';
-+    }),
+    })->displayUsing(function ($value) {
+        return Status::{$value}->value() ?? '-';
+    }),
 ```
 
 In order to make a Nova factory::
 
-```diff
+```php
 // In Nova factory file
 public function definition(): array
 {
     return [
-+        'size' => fake()->randomElement(Status::names()),
+        'size' => fake()->randomElement(Status::names()),
     ];
 }
 ```
 
 ## How to make use in detail
 
-```diff
+```php
 use Cable8mm\EnumGetter\EnumGetter;
 
 enum Size: string
 {
-+    use EnumGetter;
+    use EnumGetter;
 
     case LARGE = 'large';
     case MIDDLE = 'middle';
     case SMALL = 'small';
 }
 
-print Size::LARGE->name
-//=> 'LARGE'
-
-print Size::LARGE->value
-//=> 'large'
-
-print Size::LARGE->value()
-//=> 'large'
-
-print Size::LARGE->name()
-//=> 'LARGE'
-
-print Size::names()
-//=> ['LARGE', 'MIDDLE', 'SMALL']
-
-print Size::values()
-//=> ['large', 'middle', 'small']
-
-print Size::array()
-//=> ['LARGE'=>'large', 'MIDDLE'=>'middle', 'SMALL'=>'small']
-
-print Size::getName('large')
-//=> 'LARGE'
+print Size::LARGE->name     //=> 'LARGE'
+print Size::LARGE->value    //=> 'large'
+print Size::LARGE->value()  //=> 'large'
+print Size::LARGE->name()   //=> 'LARGE'
+print Size::names()         //=> ['LARGE', 'MIDDLE', 'SMALL']
+print Size::values()        //=> ['large', 'middle', 'small']
+print Size::array()         //=> ['LARGE'=>'large', 'MIDDLE'=>'middle', 'SMALL'=>'small']
+print Size::reverse()         //=> ['large'=>'LARGE', 'middle'=>'MIDDLE', 'small'=>'SMALL']
+print Size::getName('large')//=> 'LARGE'
+print Size::of('large')     //=> Size::LARGE
 ```
 
 When overriding the `value()` method to support non-English values,
 
-```diff
+```php
 use Cable8mm\EnumGetter\EnumGetter;
 
 enum Size2: string
 {
-+    use EnumGetter;
+    use EnumGetter;
 
     case LARGE = 'large';
     case MIDDLE = 'middle';
     case SMALL = 'small';
 
-+    public function value(): string
-+    {
-+        return match ($this) {
-+            self::LARGE => 'grand', // __('large') can use a translation module
-+            self::MIDDLE => 'milieu', // __('milieu') can use a translation module
-+            self::SMALL => 'petit(e)', // __('small') can use a translation module
-+        };
-+    }
+    public function value(): string
+    {
+        return match ($this) {
+            self::LARGE => 'grand', // __('large') can use a translation module
+            self::MIDDLE => 'milieu', // __('milieu') can use a translation module
+            self::SMALL => 'petit(e)', // __('small') can use a translation module
+        };
+    }
 }
 
-print Size2::LARGE->name
-//=> 'LARGE'
-
-print Size::LARGE->value
-//=> 'large'
-
-print Size::LARGE->value()
-//=> 'grand'
-
-print Size2::LARGE->name()
-//=> 'LARGE'
-
-print Size2::names()
-//=> ['LARGE', 'MIDDLE', 'SMALL']
-
-print Size2::values()
-//=> ['grand', 'milieu', 'petit(e)']
-
-print Size2::array()
-//=> ['LARGE'=>'grand', 'MIDDLE'=>'milieu', 'SMALL'=>'petit(e)']
-
-print Size::getName('grand')
-//=> 'LARGE'
+print Size2::LARGE->name    //=> 'LARGE'
+print Size::LARGE->value    //=> 'large'
+print Size::LARGE->value()  //=> 'grand'
+print Size2::LARGE->name()  //=> 'LARGE'
+print Size2::names()        //=> ['LARGE', 'MIDDLE', 'SMALL']
+print Size2::values()       //=> ['grand', 'milieu', 'petit(e)']
+print Size2::array()        //=> ['LARGE'=>'grand', 'MIDDLE'=>'milieu', 'SMALL'=>'petit(e)']
+print Size2::reverse()        //=> ['grand'=>'LARGE', 'milieu'=>'MIDDLE', 'petit(e)'=>'SMALL']
+print Size::getName('grand')//=> 'LARGE'
+print Size::of('large')     //=> Size::LARGE
 ```
 
 ### Testing
