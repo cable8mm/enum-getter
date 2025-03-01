@@ -43,12 +43,8 @@ use Laravel\Nova\Fields\Select;
  * @see https://nova.laravel.com/docs/v5/resources/fields#select-field
  */
 Select::make(__('Status'), 'status')
-    ->rules('required')
-    ->required()
     ->options(Status::array())
-    ->displayUsingLabels()
-    ->filterable()
-    ->sortable(),
+    ->displayUsingLabels(),
 ```
 
 ```php
@@ -60,8 +56,6 @@ use Laravel\Nova\Fields\Status;
 Status::make(__('Status'), 'status')
     ->loadingWhen(Status::loadingWhen())
     ->failedWhen(Status::failedWhen())
-    ->filterable(function ($request, $query, $value, $attribute) {
-        $query->where($attribute, $value);
     })->displayUsing(function ($value) {
         return Status::{$value}->value() ?? '-';
     }),
@@ -74,7 +68,7 @@ In order to make a Nova factory::
 public function definition(): array
 {
     return [
-        'size' => fake()->randomElement(Status::names()),
+        'size' => fake()->randomElement(Status::keys()),
     ];
 }
 ```
@@ -94,15 +88,15 @@ enum Size: string
 }
 
 print Size::LARGE->name     //=> 'LARGE'
+print Size::LARGE->key()    //=> 'large'
 print Size::LARGE->value    //=> 'large'
-print Size::LARGE->value()  //=> 'large'
-print Size::LARGE->name()   //=> 'LARGE'
 print Size::names()         //=> ['LARGE', 'MIDDLE', 'SMALL']
+print Size::keys()          //=> ['large', 'middle', 'small']
 print Size::values()        //=> ['large', 'middle', 'small']
-print Size::array()         //=> ['LARGE'=>'large', 'MIDDLE'=>'middle', 'SMALL'=>'small']
-print Size::reverse()       //=> ['large'=>'LARGE', 'middle'=>'MIDDLE', 'small'=>'SMALL']
-print Size::getName('large')//=> 'LARGE'
-print Size::of('large')     //=> Size::LARGE
+print Size::array()         //=> ['large'=>'large', 'middle'=>'middle', 'small'=>'small']
+print Size::reverse()       //=> ['large'=>'large', 'middle'=>'middle', 'small'=>'small']
+print Size::of('LARGE')     //=> Size::LARGE
+print Size::from('large')   //=> Size::LARGE
 ```
 
 When overriding the `value()` method to support non-English values,
@@ -121,23 +115,24 @@ enum Size2: string
     public function value(): string
     {
         return match ($this) {
-            self::LARGE => 'grand',     // __('large') can use a translation module
-            self::MIDDLE => 'milieu',   // __('milieu') can use a translation module
-            self::SMALL => 'petit(e)',  // __('small') can use a translation module
+            self::LARGE => __('large'),     // grand
+            self::MIDDLE => __('middle'),   // milieu
+            self::SMALL => __('small'),     // petit(e)
         };
     }
 }
 
-print Size2::LARGE->name    //=> 'LARGE'
-print Size::LARGE->value    //=> 'large'
-print Size::LARGE->value()  //=> 'grand'
-print Size2::LARGE->name()  //=> 'LARGE'
-print Size2::names()        //=> ['LARGE', 'MIDDLE', 'SMALL']
-print Size2::values()       //=> ['grand', 'milieu', 'petit(e)']
-print Size2::array()        //=> ['LARGE'=>'grand', 'MIDDLE'=>'milieu', 'SMALL'=>'petit(e)']
-print Size2::reverse()      //=> ['grand'=>'LARGE', 'milieu'=>'MIDDLE', 'petit(e)'=>'SMALL']
-print Size::getName('grand')//=> 'LARGE'
-print Size::of('large')     //=> Size::LARGE
+print Size2::LARGE->name        //=> 'LARGE'
+print Size2::LARGE->key()       //=> 'large'
+print Size2::LARGE->value       //=> 'large'
+print Size2::LARGE->value()     //=> 'grand'
+print Size2::names()            //=> ['LARGE', 'MIDDLE', 'SMALL']
+print Size2::keys()             //=> ['large', 'middle', 'small']
+print Size2::values()           //=> ['grand', 'milieu', 'petit(e)']
+print Size2::array()            //=> ['large'=>'grand', 'middle'=>'milieu', 'small'=>'petit(e)']
+print Size2::reverse()          //=> ['grand'=>'large', 'milieu'=>'middle', 'petit(e)'=>'small']
+print Size2::of('LARGE')        //=> Size::LARGE
+print Size2::from('large')      //=> Size::LARGE
 ```
 
 ### Testing

@@ -16,29 +16,7 @@ trait EnumGetter
     }
 
     /**
-     * Get the name from the value.
-     *
-     * @param  mixed  $value  The value of the enum
-     * @return string|null The method returns the name of the enum
-     *
-     * @example case rab = 'bit';
-     * @example self::getName('bit') => rab
-     */
-    public static function getName(mixed $value = null): mixed
-    {
-        if (! is_null($value)) {
-            foreach (self::array() as $k => $v) {
-                if ($v == $value) {
-                    return $k;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Get enum instance of the enum name property
+     * Get enum instance of the enum name property. If the `name` property is a function, it would be needed.
      *
      * @param  string  $name  The enum name property
      * @return static The method returns the enum instance
@@ -57,13 +35,24 @@ trait EnumGetter
      * @example case rab = 'bit';
      * @example self::rab->value() => bit
      */
+    public function key()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Get value of the enum. If translation need to be performed, it will be overriding this method.
+     *
+     * @example case rab = 'bit';
+     * @example self::rab->value() => bit
+     */
     public function value()
     {
         return $this->value;
     }
 
     /**
-     * Get array of keys
+     * Get array of names.
      *
      * @example case rab = 'bit';
      * @example case car = 'rot';
@@ -75,7 +64,19 @@ trait EnumGetter
     }
 
     /**
-     * Get array of values to get through `translation` function
+     * Get array of keys.
+     *
+     * @example case rab = 'bit';
+     * @example case car = 'rot';
+     * @example self::names => ['rab', 'car']
+     */
+    public static function keys(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    /**
+     * Get array of values to get through `translation` function.
      *
      * @example case rab = 'bit';
      * @example case car = 'rot';
@@ -109,9 +110,9 @@ trait EnumGetter
      */
     public static function array(?string $value = null): array
     {
-        $values = ! is_null($value) ? array_fill(0, count(self::names()), $value) : self::values();
+        $values = ! is_null($value) ? array_fill(0, count(self::values()), $value) : self::values();
 
-        return array_combine(self::names(), $values);
+        return array_combine(self::keys(), $values);
     }
 
     /**
@@ -123,6 +124,6 @@ trait EnumGetter
      */
     public static function reverse(): array
     {
-        return array_combine(self::values(), self::names());
+        return array_combine(self::values(), self::keys());
     }
 }
