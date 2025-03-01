@@ -1,5 +1,15 @@
 # Release Notes
 
+## v1.6.0 - 2025-03-01
+
+### What's Changed
+
+* Update `README` for `of()` method by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/10
+* Fix wrong comments in README by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/11
+* Remove `getName()` and add `keys()` by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/12
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v1.5.0...v1.6.0
+
 ## v1.5.0 - 2025-02-20
 
 ### What's Changed
