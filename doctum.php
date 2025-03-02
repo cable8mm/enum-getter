@@ -12,7 +12,7 @@ $iterator = Finder::create()
     ->in($dir);
 
 return new Doctum($iterator, [
-    'title' => 'The Enum Getter API',
+    'title' => 'The cable8mm/enum-getter API',
     'source_dir' => dirname($dir).'/',
     'remote_repository' => new GitHubRemoteRepository('cable8mm/enum-getter', dirname($dir)),
     'footer_link' => [
