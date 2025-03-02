@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.7.1 - 2025-03-02
+
+### What's Changed
+
+* Enhance `has()` to be able to input object type argument by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/18
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v1.7.0...v1.7.1
+
 ## v1.7.0 - 2025-03-02
 
 ### What's Changed
