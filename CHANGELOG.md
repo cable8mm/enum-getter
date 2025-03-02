@@ -1,5 +1,17 @@
 # Release Notes
 
+## v1.7.0 - 2025-03-02
+
+### What's Changed
+
+* Add `has` method for checking having a specific key or value by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/13
+* Set api documents by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/14
+* Edit doctum config by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/15
+* Add deploy badge in README by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/16
+* Remove deploy action because it is just `trait` library by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/17
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v1.6.0...v1.7.0
+
 ## v1.6.0 - 2025-03-01
 
 ### What's Changed
