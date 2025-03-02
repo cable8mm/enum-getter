@@ -2,7 +2,6 @@
 
 [![code-style](https://github.com/cable8mm/enum-getter/actions/workflows/code-style.yml/badge.svg)](https://github.com/cable8mm/enum-getter/actions/workflows/code-style.yml)
 [![run-tests](https://github.com/cable8mm/enum-getter/actions/workflows/run-tests.yml/badge.svg)](https://github.com/cable8mm/enum-getter/actions/workflows/run-tests.yml)
-[![deploy-to-github-pages](https://github.com/cable8mm/enum-getter/actions/workflows/deploy-to-github-pages.yml/badge.svg)](https://github.com/cable8mm/enum-getter/actions/workflows/deploy-to-github-pages.yml)
 [![Packagist Version](https://img.shields.io/packagist/v/cable8mm/enum-getter)](https://packagist.org/packages/cable8mm/enum-getter)
 [![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/cable8mm/enum-getter/php?logo=PHP&logoColor=white&color=777BB4
 )](https://packagist.org/packages/cable8mm/enum-getter)
