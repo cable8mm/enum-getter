@@ -149,4 +149,11 @@ final class EnumGetterTest extends TestCase
 
         $this->assertFalse(TranslatedExample::has(value: 'ChildClass four'));
     }
+
+    public function test_has_method_with_trait(): void
+    {
+        $this->assertTrue(Example::has(Example::EXAMPLE_1));
+
+        $this->assertFalse(Example::has(TranslatedExample::EXAMPLE_1));
+    }
 }

@@ -84,7 +84,7 @@ trait EnumGetter
     /**
      * Check if enum has a specific key or value.
      *
-     * @param  ?string  $key  The key of the enum.
+     * @param  string|object|null  $key  The key of the enum.
      * @param  ?string  $value  The value of the enum.
      * @return bool The method returns true if the enum has the specified key and value, false otherwise.
      *
@@ -93,11 +93,24 @@ trait EnumGetter
      * @example self::has('ko')
      * @example self::has(key: 'ko')
      * @example self::has(value: 'ko')
+     * @example self::has(AEnum::WENDY)
      */
-    public static function has(?string $key = null, ?string $value = null): bool
+    public static function has(string|object|null $key = null, ?string $value = null): bool
     {
         if (is_null($key) && is_null($value)) {
             throw new \InvalidArgumentException('The key or value must not be null.');
+        }
+
+        if ($key instanceof self) {
+            $cases = self::cases();
+
+            foreach ($cases as $case) {
+                if ($case === $key) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         if (! is_null($key)) {
