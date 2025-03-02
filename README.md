@@ -56,7 +56,7 @@ use Laravel\Nova\Fields\Status;
 Status::make(__('Status'), 'status')
     ->loadingWhen(Status::loadingWhen())
     ->failedWhen(Status::failedWhen())
-    })->displayUsing(function ($value) {
+    ->displayUsing(function ($value) {
         return Status::{$value}->value() ?? '-';
     }),
 ```
@@ -87,16 +87,19 @@ enum Size: string
     case SMALL = 'small';
 }
 
-print Size::LARGE->name     //=> 'LARGE'
-print Size::LARGE->key()    //=> 'large'
-print Size::LARGE->value    //=> 'large'
-print Size::names()         //=> ['LARGE', 'MIDDLE', 'SMALL']
-print Size::keys()          //=> ['large', 'middle', 'small']
-print Size::values()        //=> ['large', 'middle', 'small']
-print Size::array()         //=> ['large'=>'large', 'middle'=>'middle', 'small'=>'small']
-print Size::reverse()       //=> ['large'=>'large', 'middle'=>'middle', 'small'=>'small']
-print Size::of('LARGE')     //=> Size::LARGE
-print Size::from('large')   //=> Size::LARGE
+print Size::LARGE->name;         //=> 'LARGE'
+print Size::LARGE->key();        //=> 'large'
+print Size::LARGE->value;        //=> 'large'
+print Size::has('large');        //=> true
+print Size::has('larger');       //=> false
+print Size::has(value: 'large'); //=> true
+print Size::names();             //=> ['LARGE', 'MIDDLE', 'SMALL']
+print Size::keys();              //=> ['large', 'middle', 'small']
+print Size::values();            //=> ['large', 'middle', 'small']
+print Size::array();             //=> ['large'=>'large', 'middle'=>'middle', 'small'=>'small']
+print Size::reverse();           //=> ['large'=>'large', 'middle'=>'middle', 'small'=>'small']
+print Size::of('LARGE');         //=> Size::LARGE
+print Size::from('large');       //=> Size::LARGE
 ```
 
 When overriding the `value()` method to support non-English values,
@@ -122,17 +125,21 @@ enum Size2: string
     }
 }
 
-print Size2::LARGE->name        //=> 'LARGE'
-print Size2::LARGE->key()       //=> 'large'
-print Size2::LARGE->value       //=> 'large'
-print Size2::LARGE->value()     //=> 'grand'
-print Size2::names()            //=> ['LARGE', 'MIDDLE', 'SMALL']
-print Size2::keys()             //=> ['large', 'middle', 'small']
-print Size2::values()           //=> ['grand', 'milieu', 'petit(e)']
-print Size2::array()            //=> ['large'=>'grand', 'middle'=>'milieu', 'small'=>'petit(e)']
-print Size2::reverse()          //=> ['grand'=>'large', 'milieu'=>'middle', 'petit(e)'=>'small']
-print Size2::of('LARGE')        //=> Size::LARGE
-print Size2::from('large')      //=> Size::LARGE
+print Size2::LARGE->name;        //=> 'LARGE'
+print Size2::LARGE->key();       //=> 'large'
+print Size2::LARGE->value;       //=> 'large'
+print Size::has('large');        //=> true
+print Size::has('larger');       //=> false
+print Size::has(value: 'large'); //=> false
+print Size::has(value: 'grand'); //=> true
+print Size2::LARGE->value();     //=> 'grand'
+print Size2::names();            //=> ['LARGE', 'MIDDLE', 'SMALL']
+print Size2::keys();             //=> ['large', 'middle', 'small']
+print Size2::values();           //=> ['grand', 'milieu', 'petit(e)']
+print Size2::array();            //=> ['large'=>'grand', 'middle'=>'milieu', 'small'=>'petit(e)']
+print Size2::reverse();          //=> ['grand'=>'large', 'milieu'=>'middle', 'petit(e)'=>'small']
+print Size2::of('LARGE');        //=> Size::LARGE
+print Size2::from('large');      //=> Size::LARGE
 ```
 
 ### Testing

@@ -126,4 +126,27 @@ final class EnumGetterTest extends TestCase
     {
         $this->assertEquals(['one', 'two', 'three'], Example::keys());
     }
+
+    public function test_has_method(): void
+    {
+        $this->assertTrue(Example::has('one'));
+        $this->assertTrue(Example::has('two'));
+        $this->assertTrue(Example::has('three'));
+
+        $this->assertTrue(Example::has(value: 'one'));
+        $this->assertTrue(Example::has(value: 'two'));
+        $this->assertTrue(Example::has(value: 'three'));
+
+        $this->assertFalse(Example::has('four'));
+        $this->assertFalse(Example::has(value: 'four'));
+    }
+
+    public function test_has_method_with_values(): void
+    {
+        $this->assertTrue(TranslatedExample::has(value: 'ChildClass one'));
+        $this->assertTrue(TranslatedExample::has(value: 'ChildClass two'));
+        $this->assertTrue(TranslatedExample::has(value: 'ChildClass three'));
+
+        $this->assertFalse(TranslatedExample::has(value: 'ChildClass four'));
+    }
 }
