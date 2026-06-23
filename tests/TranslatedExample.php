@@ -12,7 +12,7 @@ enum TranslatedExample: string
     case EXAMPLE_2 = 'two';
     case EXAMPLE_3 = 'three';
 
-    public function value()
+    public function label()
     {
         return match ($this) {
             self::EXAMPLE_1 => 'ChildClass one',
