@@ -1,51 +1,50 @@
 {
-    "$schema": "https://getcomposer.org/schema.json",
-    "name": "cable8mm/enum-getter",
-    "description": "This package make Enums simple for making keys, values and combine array including translate function.",
-    "keywords": [
-        "cable8mm",
-        "enum-getter",
-        "enum",
-        "getter"
-    ],
-    "homepage": "https://github.com/cable8mm/enum-getter",
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Sam Lee",
-            "email": "cable8mm@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": "^8.3"
-    },
-    "require-dev": {
-        "laravel/pint": "^1.19",
-        "phpunit/phpunit": "^10.0|^11.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Cable8mm\\EnumGetter\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Cable8mm\\EnumGetter\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit tests",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-        "lint": "./vendor/bin/pint",
-        "apidoc": "rm -rf build; rm -rf cache; doctum.phar update doctum.php --output-format=github --no-ansi --no-progress -v;",
-        "opendoc": "open build/index.html"
-    },
-    "suggest": {
-        "laravel/pint": "Pint is a PHP static analysis tool that finds common mistakes in your Laravel application."
-    },
-    "config": {
-        "sort-packages": true
+  "$schema": "https://getcomposer.org/schema.json",
+  "name": "cable8mm/enum-getter",
+  "description": "Translation-aware helpers for PHP Enums used in Laravel Nova.",
+  "keywords": [
+    "enum",
+    "laravel",
+    "nova",
+    "translation",
+    "php-enum"
+  ],
+  "homepage": "https://github.com/cable8mm/enum-getter",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Sam Lee",
+      "email": "cable8mm@gmail.com",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": "^8.2"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.19",
+    "phpunit/phpunit": "^10.0|^11.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cable8mm\\EnumGetter\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Cable8mm\\EnumGetter\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit tests",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "lint": "./vendor/bin/pint",
+    "apidoc": "rm -rf build; rm -rf cache; doctum.phar update doctum.php --output-format=github --no-ansi --no-progress -v;",
+    "opendoc": "open build/index.html"
+  },
+  "suggest": {},
+  "config": {
+    "sort-packages": true
+  }
 }

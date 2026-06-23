@@ -5,22 +5,41 @@ namespace Cable8mm\EnumGetter;
 trait EnumGetter
 {
     /**
-     * Get name of the enum.
-     *
-     * @example self::rab->name()
+     * Get enum name.
      */
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }
 
     /**
-     * Get enum instance of the enum name property. If the `name` property is a function, it would be needed.
+     * Get enum key.
+     */
+    public function key(): string|int
+    {
+        return $this->value;
+    }
+
+    /**
+     * Get translated label.
      *
-     * @param  string  $name  The enum name property
-     * @return static The method returns the enum instance
-     *
-     * @example self::of('rab')
+     * Override this method when translation is needed.
+     */
+    public function label(): string
+    {
+        return (string) $this->value;
+    }
+
+    /**
+     * @deprecated Use label() instead.
+     */
+    public function value(): string
+    {
+        return $this->label();
+    }
+
+    /**
+     * Get enum instance by name.
      */
     public static function of(string $name): static
     {
@@ -28,29 +47,7 @@ trait EnumGetter
     }
 
     /**
-     * Get value of the enum.
-     *
-     * @example self::rab->key()
-     */
-    public function key()
-    {
-        return $this->value;
-    }
-
-    /**
-     * Get value of the enum. If translation need to be performed, it will be overriding this method.
-     *
-     * @example self::rab->value()
-     */
-    public function value()
-    {
-        return $this->value;
-    }
-
-    /**
-     * Get array of names.
-     *
-     * @example self::names()
+     * Get enum names.
      */
     public static function names(): array
     {
@@ -58,9 +55,7 @@ trait EnumGetter
     }
 
     /**
-     * Get array of keys.
-     *
-     * @example self::keys()
+     * Get enum keys.
      */
     public static function keys(): array
     {
@@ -68,80 +63,84 @@ trait EnumGetter
     }
 
     /**
-     * Get array of values to get through `translation` function.
-     *
-     * @example self::values()
+     * Get translated labels.
      */
-    public static function values(): array
+    public static function labels(): array
     {
         return array_map(
-            function ($value) {
-                return $value->value();
-            }, self::cases()
+            fn ($case) => $case->label(),
+            self::cases(),
         );
     }
 
     /**
-     * Check if enum has a specific key or value.
-     *
-     * @param  string|object|null  $key  The key of the enum.
-     * @param  ?string  $value  The value of the enum.
-     * @return bool The method returns true if the enum has the specified key and value, false otherwise.
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @example self::has('ko')
-     * @example self::has(key: 'ko')
-     * @example self::has(value: 'ko')
-     * @example self::has(AEnum::WENDY)
+     * @deprecated Use labels() instead.
      */
-    public static function has(string|object|null $key = null, ?string $value = null): bool
+    public static function values(): array
     {
-        if (is_null($key) && is_null($value)) {
-            throw new \InvalidArgumentException('The key or value must not be null.');
-        }
-
-        if ($key instanceof self) {
-            $cases = self::cases();
-
-            foreach ($cases as $case) {
-                if ($case === $key) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        if (! is_null($key)) {
-            return in_array($key, self::keys());
-        }
-
-        return in_array($value, self::values());
+        return self::labels();
     }
 
     /**
-     * Get array of keys and values.
+     * Determine whether enum contains key, label, or case.
      *
-     * @param  ?string  $value  The value of the enum to be filled.
+     * @throws \InvalidArgumentException
+     */
+    public static function has(
+        string|object|null $key = null,
+        ?string $value = null,
+    ): bool {
+        if ($key === null && $value === null) {
+            throw new \InvalidArgumentException(
+                'The key or value must not be null.'
+            );
+        }
+
+        if ($key instanceof \UnitEnum) {
+            return in_array($key, self::cases(), true);
+        }
+
+        if ($key !== null) {
+            return in_array($key, self::keys(), true);
+        }
+
+        return in_array($value, self::labels(), true);
+    }
+
+    /**
+     * Get translated options for Laravel Nova.
      *
-     * @example self::array()
-     * @example self::array(value: 'bit_or_rot')
+     * @example self::options()
+     * @example self::options(value: 'info')
+     */
+    public static function options(?string $value = null): array
+    {
+        $values = $value === null
+            ? self::labels()
+            : array_fill(0, count(self::cases()), $value);
+
+        return array_combine(
+            self::keys(),
+            $values,
+        );
+    }
+
+    /**
+     * @deprecated Use options() instead.
      */
     public static function array(?string $value = null): array
     {
-        $values = ! is_null($value) ? array_fill(0, count(self::values()), $value) : self::values();
-
-        return array_combine(self::keys(), $values);
+        return self::options($value);
     }
 
     /**
-     * Get reverse array of keys and values.
-     *
-     * @example self::reverse()
+     * Get reverse mapping.
      */
     public static function reverse(): array
     {
-        return array_combine(self::values(), self::keys());
+        return array_combine(
+            self::labels(),
+            self::keys(),
+        );
     }
 }

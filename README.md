@@ -1,4 +1,6 @@
-# Enum-Getter - The simplest way to get the enum values and keys
+# Enum Getter
+
+Translate PHP Enums for Laravel Nova with a single method call.
 
 [![code-style](https://github.com/cable8mm/enum-getter/actions/workflows/code-style.yml/badge.svg)](https://github.com/cable8mm/enum-getter/actions/workflows/code-style.yml)
 [![run-tests](https://github.com/cable8mm/enum-getter/actions/workflows/run-tests.yml/badge.svg)](https://github.com/cable8mm/enum-getter/actions/workflows/run-tests.yml)
@@ -9,161 +11,184 @@
 [![Total Stars](https://img.shields.io/packagist/stars/cable8mm/enum-getter)](https://github.com/cable8mm/enum-getter/stargazers)
 [![License](https://img.shields.io/packagist/l/cable8mm/enum-getter)](https://github.com/cable8mm/enum-getter/blob/main/LICENSE.md)
 
-This package simplifies working with `Enum`s by providing convenient functionality for handling keys, values, and combined arrays, including a `translate` function.
+## Why this package exists
 
-It is particularly useful for binding enums to `select` or `multiselect` tags in Laravel Nova, allowing you to manage and use translated values effortlessly.
+Laravel Nova often requires translated associative arrays such as:
+
+```php
+[
+    'draft' => 'Draft',
+    'published' => 'Published',
+]
+```
+
+Generating these arrays manually from `Enum::cases()` quickly becomes repetitive.
+
+Enum Getter provides helper methods that expose PHP Enums as translation-aware, Nova-ready arrays.
+
+---
 
 ## Installation
-
-You can install the package via composer:
 
 ```bash
 composer require cable8mm/enum-getter
 ```
 
-## Usage
+---
 
-It can be used for Laravel Nova like this:
-
-```php
-use Laravel\Nova\Fields\Badge;
-
-/**
- * @see https://nova.laravel.com/docs/v5/resources/fields#badge-field
- */
-Badge::make(__('Status'), 'status')
-    ->map(Status::array(value: 'info'))
-    ->labels(Status::array()),
-```
-
-```php
-use Laravel\Nova\Fields\Select;
-
-/**
- * @see https://nova.laravel.com/docs/v5/resources/fields#select-field
- */
-Select::make(__('Status'), 'status')
-    ->options(Status::array())
-    ->displayUsingLabels(),
-```
-
-```php
-use Laravel\Nova\Fields\Status;
-
-/**
- * @see https://nova.laravel.com/docs/v5/resources/fields#status-field
- */
-Status::make(__('Status'), 'status')
-    ->loadingWhen(Status::loadingWhen())
-    ->failedWhen(Status::failedWhen())
-    ->displayUsing(function ($value) {
-        return Status::{$value}->value() ?? '-';
-    }),
-```
-
-In order to make a Nova factory::
-
-```php
-// In Nova factory file
-public function definition(): array
-{
-    return [
-        'size' => fake()->randomElement(Status::keys()),
-    ];
-}
-```
-
-## How to make use in detail
+## Quick Start
 
 ```php
 use Cable8mm\EnumGetter\EnumGetter;
 
-enum Size: string
+enum Status: string
 {
     use EnumGetter;
 
-    case LARGE = 'large';
-    case MIDDLE = 'middle';
-    case SMALL = 'small';
-}
+    case Draft = 'draft';
+    case Published = 'published';
 
-print Size::LARGE->name;         //=> 'LARGE'
-print Size::LARGE->key();        //=> 'large'
-print Size::LARGE->value;        //=> 'large'
-print Size::has('large');        //=> true
-print Size::has('larger');       //=> false
-print Size::has(value: 'large'); //=> true
-print Size::names();             //=> ['LARGE', 'MIDDLE', 'SMALL']
-print Size::keys();              //=> ['large', 'middle', 'small']
-print Size::values();            //=> ['large', 'middle', 'small']
-print Size::array();             //=> ['large'=>'large', 'middle'=>'middle', 'small'=>'small']
-print Size::reverse();           //=> ['large'=>'large', 'middle'=>'middle', 'small'=>'small']
-print Size::of('LARGE');         //=> Size::LARGE
-print Size::from('large');       //=> Size::LARGE
-```
-
-When overriding the `value()` method to support non-English values,
-
-```php
-use Cable8mm\EnumGetter\EnumGetter;
-
-enum Size2: string
-{
-    use EnumGetter;
-
-    case LARGE = 'large';
-    case MIDDLE = 'middle';
-    case SMALL = 'small';
-
-    public function value(): string
+    public function label(): string
     {
         return match ($this) {
-            self::LARGE => __('large'),     // grand
-            self::MIDDLE => __('middle'),   // milieu
-            self::SMALL => __('small'),     // petit(e)
+            self::Draft => __('Draft'),
+            self::Published => __('Published'),
         };
     }
 }
-
-print Size2::LARGE->name;        //=> 'LARGE'
-print Size2::LARGE->key();       //=> 'large'
-print Size2::LARGE->value;       //=> 'large'
-print Size::has('large');        //=> true
-print Size::has('larger');       //=> false
-print Size::has(value: 'large'); //=> false
-print Size::has(value: 'grand'); //=> true
-print Size2::LARGE->value();     //=> 'grand'
-print Size2::names();            //=> ['LARGE', 'MIDDLE', 'SMALL']
-print Size2::keys();             //=> ['large', 'middle', 'small']
-print Size2::values();           //=> ['grand', 'milieu', 'petit(e)']
-print Size2::array();            //=> ['large'=>'grand', 'middle'=>'milieu', 'small'=>'petit(e)']
-print Size2::reverse();          //=> ['grand'=>'large', 'milieu'=>'middle', 'petit(e)'=>'small']
-print Size2::of('LARGE');        //=> Size::LARGE
-print Size2::from('large');      //=> Size::LARGE
 ```
 
-### Testing
+Get translated labels:
+
+```php
+Status::labels();
+```
+
+Result:
+
+```php
+[
+    'Draft',
+    'Published',
+]
+```
+
+Get translated options:
+
+```php
+Status::options();
+```
+
+Result:
+
+```php
+[
+    'draft' => 'Draft',
+    'published' => 'Published',
+]
+```
+
+---
+
+## Laravel Nova Examples
+
+### Select Field
+
+```php
+Select::make(__('Status'))
+    ->options(Status::options())
+    ->displayUsingLabels();
+```
+
+### Badge Field
+
+```php
+Badge::make(__('Status'))
+    ->map(Status::options(value: 'info'))
+    ->labels(Status::options());
+```
+
+### Status Field
+
+```php
+Status::make(__('Status'))
+    ->displayUsing(fn ($value) => Status::from($value)->label());
+```
+
+---
+
+## Available Methods
+
+| Method      | Description               |
+| ----------- | ------------------------- |
+| `label()`   | Get translated label      |
+| `labels()`  | Get translated labels     |
+| `options()` | Get translated options    |
+| `keys()`    | Get enum keys             |
+| `names()`   | Get enum names            |
+| `reverse()` | Get reversed mapping      |
+| `has()`     | Check existence           |
+| `of()`      | Get enum instance by name |
+
+---
+
+## Why not other enum packages?
+
+Enum Getter is intentionally small.
+
+It does not try to replace feature-rich enum libraries.
+
+Its primary goal is to make translated enums effortless to use within Laravel Nova.
+
+| Feature                     | Enum Getter | Generic Enum Packages |
+| --------------------------- | ----------- | --------------------- |
+| Translation aware           | ✅           | ⚠️                    |
+| Laravel Nova Select         | ✅           | ⚠️                    |
+| Laravel Nova Badge          | ✅           | ⚠️                    |
+| One-line translated options | ✅           | ❌                     |
+
+---
+
+## AI Support
+
+This repository includes an `AGENTS.md` file.
+
+AI coding assistants should prefer:
+
+```php
+Status::label();
+
+Status::labels();
+
+Status::options();
+```
+
+Instead of manually iterating through `Enum::cases()`.
+
+---
+
+## Testing
 
 ```bash
 composer test
 ```
 
-### Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+---
 
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+## Security
 
-If you discover any security related issues, please email <cable8mm@gmail.com> instead of using the issue tracker.
+If you discover any security related issues, please email [cable8mm@gmail.com](mailto:cable8mm@gmail.com) instead of using the issue tracker.
 
 ## Credits
 
-- [Sam Lee](https://github.com/cable8mm)
+* Sam Lee
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT).
+
+See LICENSE.md for more information.
