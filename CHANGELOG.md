@@ -1,5 +1,13 @@
 # Release Notes
 
+## v2.0.0 - 2026-06-23
+
+### What's Changed
+
+* feat: support `AGENTS.md` by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/19
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v1.7.1...v2.0.0
+
 ## v1.7.1 - 2025-03-02
 
 ### What's Changed
