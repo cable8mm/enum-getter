@@ -1,5 +1,13 @@
 # Release Notes
 
+## v2.0.1 - 2026-07-13
+
+### What's Changed
+
+* fix: syntax error in `php 8.2` by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/20
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v2.0.0...v2.0.1
+
 ## v2.0.0 - 2026-06-23
 
 ### What's Changed
