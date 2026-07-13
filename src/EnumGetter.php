@@ -43,7 +43,7 @@ trait EnumGetter
      */
     public static function of(string $name): static
     {
-        return self::{$name};
+        return constant(self::class.'::'.$name);
     }
 
     /**
