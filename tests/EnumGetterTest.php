@@ -156,4 +156,34 @@ final class EnumGetterTest extends TestCase
 
         $this->assertFalse(Example::has(TranslatedExample::EXAMPLE_1));
     }
+
+    public function test_random_key_method(): void
+    {
+        $this->assertContains(Example::randomKey(), Example::keys());
+    }
+
+    public function test_random_key_method_with_values(): void
+    {
+        $this->assertContains(TranslatedExample::randomKey(), TranslatedExample::keys());
+    }
+
+    public function test_random_label_method(): void
+    {
+        $this->assertContains(Example::randomLabel(), Example::labels());
+    }
+
+    public function test_random_label_method_with_values(): void
+    {
+        $this->assertContains(TranslatedExample::randomLabel(), TranslatedExample::labels());
+    }
+
+    public function test_random_option_method(): void
+    {
+        $this->assertContains(Example::randomOption(), Example::cases());
+    }
+
+    public function test_random_option_method_with_values(): void
+    {
+        $this->assertContains(TranslatedExample::randomOption(), TranslatedExample::cases());
+    }
 }
