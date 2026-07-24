@@ -87,6 +87,54 @@ Result:
 ]
 ```
 
+Get a random enum instance:
+
+```php
+Status::random();
+```
+
+Result:
+
+```php
+Status::Draft
+```
+
+Get a random enum key:
+
+```php
+Status::random()->key();
+```
+
+Result:
+
+```php
+'draft'
+```
+
+Get the key of an enum case:
+
+```php
+Status::Draft->key();
+```
+
+Result:
+
+```php
+'draft'
+```
+
+Get the translated label of an enum case:
+
+```php
+Status::Draft->label();
+```
+
+Result:
+
+```php
+'Draft'
+```
+
 ---
 
 ## Laravel Nova Examples
@@ -118,19 +166,19 @@ Status::make(__('Status'))
 
 ## Available Methods
 
-| Method           | Description                   |
-| ---------------- | ----------------------------- |
-| `label()`        | Get translated label          |
-| `labels()`       | Get translated labels         |
-| `options()`      | Get translated options        |
-| `keys()`         | Get enum keys                 |
-| `names()`        | Get enum names                |
-| `reverse()`      | Get reversed mapping          |
-| `has()`          | Check existence               |
-| `of()`           | Get enum instance by name     |
-| `randomKey()`    | Get a random enum key         |
-| `randomLabel()`  | Get a random translated label |
-| `randomOption()` | Get a random enum instance    |
+| Method      | Description                |
+| ----------- | -------------------------- |
+| `name()`    | Get enum case name         |
+| `key()`     | Get enum key (value)       |
+| `label()`   | Get translated label       |
+| `names()`   | Get enum case names        |
+| `keys()`    | Get enum keys              |
+| `labels()`  | Get translated labels      |
+| `options()` | Get translated options     |
+| `reverse()` | Get reversed mapping       |
+| `has()`     | Check existence            |
+| `of()`      | Get enum instance by name  |
+| `random()`  | Get a random enum instance |
 
 ---
 
@@ -153,8 +201,6 @@ Its primary goal is to make translated enums effortless to use within Laravel No
 
 ## AI Support
 
-This repository includes an `AGENTS.md` file.
-
 AI coding assistants should prefer:
 
 ```php
@@ -163,6 +209,8 @@ Status::label();
 Status::labels();
 
 Status::options();
+
+Status::random();
 ```
 
 Instead of manually iterating through `Enum::cases()`.
