@@ -1,5 +1,13 @@
 # Release Notes
 
+## v2.1.1 - 2026-07-24
+
+### What's Changed
+
+* feat: add random method to retrieve random enum instances and update tests by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/22
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v2.1.0...v2.1.1
+
 ## v2.1.0 - 2026-07-24
 
 ### What's Changed
