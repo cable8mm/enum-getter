@@ -149,41 +149,9 @@ trait EnumGetter
      *
      * @throws \InvalidArgumentException
      */
-    public static function randomKey(): string
-    {
-        $keys = self::keys();
-
-        if (empty($keys)) {
-            throw new \InvalidArgumentException(
-                'The enum has no keys.'
-            );
-        }
-
-        return $keys[array_rand($keys)];
-    }
-
-    public static function randomLabel(): string
-    {
-        $labels = self::labels();
-
-        if (empty($labels)) {
-            throw new \InvalidArgumentException(
-                'The enum has no labels.'
-            );
-        }
-
-        return $labels[array_rand($labels)];
-    }
-
-    public static function randomOption(): static
+    public static function random(): self
     {
         $cases = self::cases();
-
-        if (empty($cases)) {
-            throw new \InvalidArgumentException(
-                'The enum has no cases.'
-            );
-        }
 
         return $cases[array_rand($cases)];
     }

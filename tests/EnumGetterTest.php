@@ -157,33 +157,45 @@ final class EnumGetterTest extends TestCase
         $this->assertFalse(Example::has(TranslatedExample::EXAMPLE_1));
     }
 
-    public function test_random_key_method(): void
+    public function test_random_method_returns_enum_instance(): void
     {
-        $this->assertContains(Example::randomKey(), Example::keys());
+        $random = Example::random();
+
+        $this->assertInstanceOf(Example::class, $random);
     }
 
-    public function test_random_key_method_with_values(): void
+    public function test_random_method_returns_valid_case(): void
     {
-        $this->assertContains(TranslatedExample::randomKey(), TranslatedExample::keys());
+        $cases = Example::cases();
+
+        $random = Example::random();
+
+        $this->assertContains($random, $cases);
     }
 
-    public function test_random_label_method(): void
+    public function test_random_method_returns_valid_key(): void
     {
-        $this->assertContains(Example::randomLabel(), Example::labels());
+        $keys = Example::keys();
+
+        $random = Example::random();
+
+        $this->assertContains($random->key(), $keys);
     }
 
-    public function test_random_label_method_with_values(): void
+    public function test_random_method_with_translated_example(): void
     {
-        $this->assertContains(TranslatedExample::randomLabel(), TranslatedExample::labels());
+        $random = TranslatedExample::random();
+
+        $this->assertInstanceOf(TranslatedExample::class, $random);
+        $this->assertContains($random, TranslatedExample::cases());
     }
 
-    public function test_random_option_method(): void
+    public function test_random_method_returns_valid_label(): void
     {
-        $this->assertContains(Example::randomOption(), Example::cases());
-    }
+        $labels = TranslatedExample::labels();
 
-    public function test_random_option_method_with_values(): void
-    {
-        $this->assertContains(TranslatedExample::randomOption(), TranslatedExample::cases());
+        $random = TranslatedExample::random();
+
+        $this->assertContains($random->label(), $labels);
     }
 }
