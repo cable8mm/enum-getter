@@ -5,8 +5,7 @@ Translate PHP Enums for Laravel Nova with a single method call.
 [![code-style](https://github.com/cable8mm/enum-getter/actions/workflows/code-style.yml/badge.svg)](https://github.com/cable8mm/enum-getter/actions/workflows/code-style.yml)
 [![run-tests](https://github.com/cable8mm/enum-getter/actions/workflows/run-tests.yml/badge.svg)](https://github.com/cable8mm/enum-getter/actions/workflows/run-tests.yml)
 [![Packagist Version](https://img.shields.io/packagist/v/cable8mm/enum-getter)](https://packagist.org/packages/cable8mm/enum-getter)
-[![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/cable8mm/enum-getter/php?logo=PHP&logoColor=white&color=777BB4
-)](https://packagist.org/packages/cable8mm/enum-getter)
+[![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/cable8mm/enum-getter/php?logo=PHP&logoColor=white&color=777BB4)](https://packagist.org/packages/cable8mm/enum-getter)
 [![Total Downloads](https://img.shields.io/packagist/dt/cable8mm/enum-getter)](https://packagist.org/packages/cable8mm/enum-getter/stats)
 [![Total Stars](https://img.shields.io/packagist/stars/cable8mm/enum-getter)](https://github.com/cable8mm/enum-getter/stargazers)
 [![License](https://img.shields.io/packagist/l/cable8mm/enum-getter)](https://github.com/cable8mm/enum-getter/blob/main/LICENSE.md)
@@ -119,16 +118,19 @@ Status::make(__('Status'))
 
 ## Available Methods
 
-| Method      | Description               |
-| ----------- | ------------------------- |
-| `label()`   | Get translated label      |
-| `labels()`  | Get translated labels     |
-| `options()` | Get translated options    |
-| `keys()`    | Get enum keys             |
-| `names()`   | Get enum names            |
-| `reverse()` | Get reversed mapping      |
-| `has()`     | Check existence           |
-| `of()`      | Get enum instance by name |
+| Method           | Description                   |
+| ---------------- | ----------------------------- |
+| `label()`        | Get translated label          |
+| `labels()`       | Get translated labels         |
+| `options()`      | Get translated options        |
+| `keys()`         | Get enum keys                 |
+| `names()`        | Get enum names                |
+| `reverse()`      | Get reversed mapping          |
+| `has()`          | Check existence               |
+| `of()`           | Get enum instance by name     |
+| `randomKey()`    | Get a random enum key         |
+| `randomLabel()`  | Get a random translated label |
+| `randomOption()` | Get a random enum instance    |
 
 ---
 
@@ -142,10 +144,10 @@ Its primary goal is to make translated enums effortless to use within Laravel No
 
 | Feature                     | Enum Getter | Generic Enum Packages |
 | --------------------------- | ----------- | --------------------- |
-| Translation aware           | ✅           | ⚠️                    |
-| Laravel Nova Select         | ✅           | ⚠️                    |
-| Laravel Nova Badge          | ✅           | ⚠️                    |
-| One-line translated options | ✅           | ❌                     |
+| Translation aware           | ✅          | ⚠️                    |
+| Laravel Nova Select         | ✅          | ⚠️                    |
+| Laravel Nova Badge          | ✅          | ⚠️                    |
+| One-line translated options | ✅          | ❌                    |
 
 ---
 
@@ -185,7 +187,7 @@ If you discover any security related issues, please email [cable8mm@gmail.com](m
 
 ## Credits
 
-* Sam Lee
+- Sam Lee
 
 ## License
 
