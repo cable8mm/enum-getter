@@ -1,5 +1,13 @@
 # Release Notes
 
+## v2.1.0 - 2026-07-24
+
+### What's Changed
+
+* feat: add random methods to retrieve random enum keys, labels, and options by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/enum-getter/pull/21
+
+**Full Changelog**: https://github.com/cable8mm/enum-getter/compare/v2.0.1...v2.1.0
+
 ## v2.0.1 - 2026-07-13
 
 ### What's Changed
