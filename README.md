@@ -72,6 +72,26 @@ Result:
 ]
 ```
 
+Get enum keys:
+
+```php
+Status::keys();
+```
+
+Result:
+
+```php
+[
+    'draft',
+    'published',
+]
+```
+
+> **Note:** In this package, "keys" refer to the actual enum values, while "labels" are the translated display names. For example:
+>
+> - `keys()` returns: `['draft', 'published']` (used as identifiers)
+> - `labels()` returns: `['Draft', 'Published']` (displayed to users)
+
 Get translated options:
 
 ```php
