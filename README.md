@@ -35,7 +35,9 @@ composer require cable8mm/enum-getter
 
 ---
 
-## Quick Start
+## Quick Start (Without Translation)
+
+If you don't need translation, simply use the `EnumGetter` trait. The `label()` method returns the enum value as-is, so `keys()` and `labels()` produce the same result.
 
 ```php
 use Cable8mm\EnumGetter\EnumGetter;
@@ -46,30 +48,7 @@ enum Status: string
 
     case Draft = 'draft';
     case Published = 'published';
-
-    public function label(): string
-    {
-        return match ($this) {
-            self::Draft => __('Draft'),
-            self::Published => __('Published'),
-        };
-    }
 }
-```
-
-Get translated labels:
-
-```php
-Status::labels();
-```
-
-Result:
-
-```php
-[
-    'Draft',
-    'Published',
-]
 ```
 
 Get enum keys:
@@ -87,10 +66,95 @@ Result:
 ]
 ```
 
-> **Note:** In this package, "keys" refer to the actual enum values, while "labels" are the translated display names. For example:
+Get labels (same as keys when no translation is needed):
+
+```php
+Status::labels();
+```
+
+Result:
+
+```php
+[
+    'draft',
+    'published',
+]
+```
+
+> **Note:** Without overriding `label()`, `keys()` and `labels()` return the same values. This is the simplest usage — no translation required.
+
+Get options:
+
+```php
+Status::options();
+```
+
+Result:
+
+```php
+[
+    'draft' => 'draft',
+    'published' => 'published',
+]
+```
+
+---
+
+## Quick Start (With Translation)
+
+When you need translated labels (e.g., Korean, English, etc.), override the `label()` method. The `keys()` method always returns the original enum values, while `labels()` returns the translated strings.
+
+```php
+use Cable8mm\EnumGetter\EnumGetter;
+
+enum Status: string
+{
+    use EnumGetter;
+
+    case Draft = 'draft';
+    case Published = 'published';
+
+    public function label(): string
+    {
+        return __($this->value);
+    }
+}
+```
+
+Get enum keys (original values, unchanged):
+
+```php
+Status::keys();
+```
+
+Result:
+
+```php
+[
+    'draft',
+    'published',
+]
+```
+
+Get translated labels:
+
+```php
+Status::labels();
+```
+
+Result:
+
+```php
+[
+    '초안',
+    '출판됨',
+]
+```
+
+> **Note:** In this package, "keys" refer to the actual enum values (used as identifiers), while "labels" are the translated display names. For example:
 >
 > - `keys()` returns: `['draft', 'published']` (used as identifiers)
-> - `labels()` returns: `['Draft', 'Published']` (displayed to users)
+> - `labels()` returns: `['초안', '출판됨']` (displayed to users)
 
 Get translated options:
 
@@ -102,12 +166,44 @@ Result:
 
 ```php
 [
-    'draft' => 'Draft',
-    'published' => 'Published',
+    'draft' => '초안',
+    'published' => '출판됨',
 ]
 ```
 
-Get a random enum instance:
+---
+
+## Understanding `key()` vs `label()`
+
+These two methods serve different purposes:
+
+- **`key()`** — Returns the enum's **value** (the identifier). This is used for data storage, routing, database lookups, etc. It never changes regardless of language.
+- **`label()`** — Returns the **display text** for the user. This is where translation happens. Override this method to return localized strings.
+
+### Example
+
+```php
+// key() always returns the original value
+Status::Draft->key();       // 'draft'
+Status::Published->key();   // 'published'
+
+// label() returns the translated display text
+Status::Draft->label();     // 'Draft' (or '초안' in Korean)
+Status::Published->label(); // 'Published' (or '발표됨' in Korean)
+```
+
+### Why are they separate?
+
+Separating `key()` and `label()` follows the **single responsibility principle**:
+
+- The **key** is a stable identifier that should never change — it's used in databases, APIs, and routing.
+- The **label** is a presentation concern — it can change based on language, context, or UI requirements.
+
+By keeping them separate, you can change translations without touching the underlying data model.
+
+---
+
+## Get a Random Enum Instance
 
 ```php
 Status::random();
@@ -129,30 +225,6 @@ Result:
 
 ```php
 'draft'
-```
-
-Get the key of an enum case:
-
-```php
-Status::Draft->key();
-```
-
-Result:
-
-```php
-'draft'
-```
-
-Get the translated label of an enum case:
-
-```php
-Status::Draft->label();
-```
-
-Result:
-
-```php
-'Draft'
 ```
 
 ---
@@ -186,19 +258,36 @@ Status::make(__('Status'))
 
 ## Available Methods
 
-| Method      | Description                |
-| ----------- | -------------------------- |
-| `name()`    | Get enum case name         |
-| `key()`     | Get enum key (value)       |
-| `label()`   | Get translated label       |
-| `names()`   | Get enum case names        |
-| `keys()`    | Get enum keys              |
-| `labels()`  | Get translated labels      |
-| `options()` | Get translated options     |
-| `reverse()` | Get reversed mapping       |
-| `has()`     | Check existence            |
-| `of()`      | Get enum instance by name  |
-| `random()`  | Get a random enum instance |
+Using the `Status` enum from the Quick Start examples:
+
+```php
+enum Status: string
+{
+    use EnumGetter;
+
+    case Draft = 'draft';
+    case Published = 'published';
+
+    public function label(): string
+    {
+        return __($this->value);
+    }
+}
+```
+
+| Method      | Description                                     | Example Call             | Example Output                                 |
+| ----------- | ----------------------------------------------- | ------------------------ | ---------------------------------------------- |
+| `name()`    | Get enum case name                              | `Status::Draft->name()`  | `'Draft'`                                      |
+| `key()`     | Get enum key (value) — the identifier           | `Status::Draft->key()`   | `'draft'`                                      |
+| `label()`   | Get translated label — override for translation | `Status::Draft->label()` | `'초안'`                                       |
+| `names()`   | Get enum case names                             | `Status::names()`        | `['Draft', 'Published']`                       |
+| `keys()`    | Get enum keys (values)                          | `Status::keys()`         | `['draft', 'published']`                       |
+| `labels()`  | Get translated labels                           | `Status::labels()`       | `['초안', '출판됨']`                           |
+| `options()` | Get translated options (key => label)           | `Status::options()`      | `['draft' => '초안', 'published' => '출판됨']` |
+| `reverse()` | Get reversed mapping (label => key)             | `Status::reverse()`      | `['초안' => 'draft', '출판됨' => 'published']` |
+| `has()`     | Check existence                                 | `Status::has('draft')`   | `true`                                         |
+| `of()`      | Get enum instance by name                       | `Status::of('Draft')`    | `Status::Draft`                                |
+| `random()`  | Get a random enum instance                      | `Status::random()`       | `Status::Draft`                                |
 
 ---
 
