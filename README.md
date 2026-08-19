@@ -289,6 +289,17 @@ enum Status: string
 | `of()`      | Get enum instance by name                       | `Status::of('Draft')`    | `Status::Draft`                                |
 | `random()`  | Get a random enum instance                      | `Status::random()`       | `Status::Draft`                                |
 
+### PHP Built-in Enum Methods
+
+In addition to the methods provided by `EnumGetter`, PHP enums have built-in methods that work seamlessly with this package:
+
+| Method      | Description                           | Example Call                 | Example Output                       |
+| ----------- | ------------------------------------- | ---------------------------- | ------------------------------------ |
+| `from()`    | Get enum instance by value            | `Status::from('draft')`      | `Status::Draft`                      |
+| `tryFrom()` | Get enum instance by value (nullable) | `Status::tryFrom('draft')`   | `Status::Draft`                      |
+| `tryFrom()` | Returns null if value doesn't exist   | `Status::tryFrom('unknown')` | `null`                               |
+| `cases()`   | Get all enum cases                    | `Status::cases()`            | `[Status::Draft, Status::Published]` |
+
 ---
 
 ## Why not other enum packages?
