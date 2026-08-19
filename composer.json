@@ -1,13 +1,14 @@
 {
   "$schema": "https://getcomposer.org/schema.json",
   "name": "cable8mm/enum-getter",
-  "description": "Translation-aware helpers for PHP Enums used in Laravel Nova.",
+  "description": "Translation-aware helpers for PHP Enums — perfect for Laravel, Laravel Nova, and any application that needs localized enum labels.",
   "keywords": [
     "enum",
     "laravel",
     "nova",
     "translation",
-    "php-enum"
+    "php-enum",
+    "enum-helper"
   ],
   "homepage": "https://github.com/cable8mm/enum-getter",
   "license": "MIT",

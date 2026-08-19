@@ -1,6 +1,6 @@
 # Enum Getter
 
-Translate PHP Enums for Laravel Nova with a single method call.
+Translation-aware helpers for PHP Enums — perfect for Laravel, Laravel Nova, and any application that needs localized enum labels.
 
 [![code-style](https://github.com/cable8mm/enum-getter/actions/workflows/code-style.yml/badge.svg)](https://github.com/cable8mm/enum-getter/actions/workflows/code-style.yml)
 [![run-tests](https://github.com/cable8mm/enum-getter/actions/workflows/run-tests.yml/badge.svg)](https://github.com/cable8mm/enum-getter/actions/workflows/run-tests.yml)
@@ -12,18 +12,18 @@ Translate PHP Enums for Laravel Nova with a single method call.
 
 ## Why this package exists
 
-Laravel Nova often requires translated associative arrays such as:
+Any application that uses PHP Enums often needs translated associative arrays such as:
 
 ```php
 [
-    'draft' => 'Draft',
-    'published' => 'Published',
+    'draft' => '초안',
+    'published' => '출판됨',
 ]
 ```
 
 Generating these arrays manually from `Enum::cases()` quickly becomes repetitive.
 
-Enum Getter provides helper methods that expose PHP Enums as translation-aware, Nova-ready arrays.
+Enum Getter provides helper methods that expose PHP Enums as translation-aware arrays — perfect for Laravel, Laravel Nova, APIs, and any application that needs localized enum labels.
 
 ---
 
@@ -289,6 +289,17 @@ enum Status: string
 | `of()`      | Get enum instance by name                       | `Status::of('Draft')`    | `Status::Draft`                                |
 | `random()`  | Get a random enum instance                      | `Status::random()`       | `Status::Draft`                                |
 
+### PHP Built-in Enum Methods
+
+In addition to the methods provided by `EnumGetter`, PHP enums have built-in methods that work seamlessly with this package:
+
+| Method      | Description                           | Example Call                 | Example Output                       |
+| ----------- | ------------------------------------- | ---------------------------- | ------------------------------------ |
+| `from()`    | Get enum instance by value            | `Status::from('draft')`      | `Status::Draft`                      |
+| `tryFrom()` | Get enum instance by value (nullable) | `Status::tryFrom('draft')`   | `Status::Draft`                      |
+| `tryFrom()` | Returns null if value doesn't exist   | `Status::tryFrom('unknown')` | `null`                               |
+| `cases()`   | Get all enum cases                    | `Status::cases()`            | `[Status::Draft, Status::Published]` |
+
 ---
 
 ## Why not other enum packages?
@@ -297,7 +308,7 @@ Enum Getter is intentionally small.
 
 It does not try to replace feature-rich enum libraries.
 
-Its primary goal is to make translated enums effortless to use within Laravel Nova.
+Its primary goal is to make translated enums effortless to use in any PHP application.
 
 | Feature                     | Enum Getter | Generic Enum Packages |
 | --------------------------- | ----------- | --------------------- |
@@ -305,6 +316,15 @@ Its primary goal is to make translated enums effortless to use within Laravel No
 | Laravel Nova Select         | ✅          | ⚠️                    |
 | Laravel Nova Badge          | ✅          | ⚠️                    |
 | One-line translated options | ✅          | ❌                    |
+
+---
+
+## Used By
+
+This package is used in production by:
+
+- [cable8mm/prompt-weaver](https://github.com/cable8mm/prompt-weaver) — AI prompt management
+- [cable8mm/order-sheet](https://github.com/cable8mm/order-sheet) — Order management system
 
 ---
 
